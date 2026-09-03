@@ -1,6 +1,4 @@
 import logging
-import os
-import stat
 
 import pytest
 import requests
@@ -23,17 +21,22 @@ def test_download_raises_on_missing_output_directory(tmp_path):
             download(URL, str(missing_dir))
 
 
-def test_download_raises_on_unwritable_output_directory(tmp_path):
-    readonly_dir = tmp_path / 'readonly'
-    readonly_dir.mkdir()
-    os.chmod(readonly_dir, stat.S_IREAD | stat.S_IEXEC)
-    try:
-        with requests_mock.Mocker() as mock:
-            mock.get(URL, text='<html><body></body></html>')
-            with pytest.raises(PermissionError):
-                download(URL, str(readonly_dir))
-    finally:
-        os.chmod(readonly_dir, stat.S_IRWXU)
+def test_download_raises_on_unwritable_output_directory(
+    tmp_path, monkeypatch,
+):
+    # A chmod-based read-only directory isn't a reliable way to trigger this:
+    # CI runs the checker as root inside Docker, and root ignores permission
+    # bits, so that approach passes locally but silently no-ops in CI.
+    # Forcing open() to fail exercises the same code path everywhere.
+    def deny_write(*args, **kwargs):
+        raise PermissionError('permission denied')
+
+    monkeypatch.setattr('builtins.open', deny_write)
+
+    with requests_mock.Mocker() as mock:
+        mock.get(URL, text='<html><body></body></html>')
+        with pytest.raises(PermissionError):
+            download(URL, str(tmp_path))
 
 
 def test_download_raises_on_network_error(tmp_path):
