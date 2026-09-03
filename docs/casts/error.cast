@@ -1,0 +1,6 @@
+{"version":3,"term":{"cols":80,"rows":24},"timestamp":1788428018,"command":"page-loader --output /no/such/directory https://ru.hexlet.io/courses; echo \"exit code: $?\"","env":{"SHELL":"/bin/zsh"}}
+[0.128, "o", "INFO:page_loader.loader:requested url: https://ru.hexlet.io/courses\r\n"]
+[0.000, "o", "INFO:page_loader.loader:output path: /no/such/directory\r\n"]
+[0.000, "o", "ERROR:page_loader.scripts.page_loader:output directory does not exist: /no/such/directory\r\n"]
+[0.014, "o", "exit code: 1\r\n"]
+[0.000, "x", "0"]

@@ -1,0 +1,6 @@
+{"version":3,"term":{"cols":80,"rows":24},"timestamp":1788427943,"command":"mkdir -p ~/page-loader-demo && page-loader --output ~/page-loader-demo https://ru.hexlet.io/courses && ls ~/page-loader-demo","env":{"SHELL":"/bin/zsh"}}
+[0.160, "o", "INFO:page_loader.loader:requested url: https://ru.hexlet.io/courses\r\nINFO:page_loader.loader:output path: /Users/chelsnebes/page-loader-demo\r\n"]
+[64.267, "o", "INFO:page_loader.loader:write html file: /Users/chelsnebes/page-loader-demo/ru-hexlet-io-courses.html\r\n"]
+[0.001, "o", "Page was downloaded as '/Users/chelsnebes/page-loader-demo/ru-hexlet-io-courses.html'\r\n"]
+[0.022, "o", "ru-hexlet-io-courses.html\tru-hexlet-io-courses_files\r\n"]
+[0.000, "x", "0"]
