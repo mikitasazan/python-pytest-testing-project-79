@@ -14,6 +14,9 @@ def download(url, output=None):
     logger.info('requested url: %s', url)
     logger.info('output path: %s', output)
 
+    if not os.path.isdir(output):
+        raise FileNotFoundError(f'output directory does not exist: {output}')
+
     response = requests.get(url)
     logger.debug('response status: %s', response.status_code)
     response.raise_for_status()

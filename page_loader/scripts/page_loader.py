@@ -5,6 +5,8 @@ import sys
 
 from page_loader import download
 
+logger = logging.getLogger(__name__)
+
 
 def build_parser():
     parser = argparse.ArgumentParser(
@@ -20,14 +22,14 @@ def build_parser():
     return parser
 
 
-def main():
+def main(argv=None):
     logging.basicConfig(level=logging.INFO)
-    args = build_parser().parse_args()
+    args = build_parser().parse_args(argv)
 
     try:
         file_path = download(args.url, args.output)
     except Exception as error:
-        print(f'Error: {error}', file=sys.stderr)
+        logger.error('%s', error)
         sys.exit(1)
 
     print(f"Page was downloaded as '{file_path}'")
