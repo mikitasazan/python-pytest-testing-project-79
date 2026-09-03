@@ -11,6 +11,8 @@ from page_loader.url_utils import (
 
 RESOURCE_TAGS = {
     'img': 'src',
+    'link': 'href',
+    'script': 'src',
 }
 
 

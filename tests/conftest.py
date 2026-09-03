@@ -25,3 +25,18 @@ def image_content():
     path = os.path.join(FIXTURES_DIR, 'python.png')
     with open(path, 'rb') as f:
         return f.read()
+
+
+@pytest.fixture
+def page_with_resources():
+    return read_fixture('page_with_resources.html')
+
+
+@pytest.fixture
+def css_content():
+    return read_fixture('application.css')
+
+
+@pytest.fixture
+def js_content():
+    return read_fixture('runtime.js')

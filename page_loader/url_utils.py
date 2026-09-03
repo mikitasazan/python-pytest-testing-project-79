@@ -24,4 +24,4 @@ def build_resource_dir_name(url):
 
 def build_resource_file_name(url):
     base, ext = os.path.splitext(_address(url))
-    return f'{_slugify(base)}{ext}'
+    return f'{_slugify(base)}{ext or ".html"}'
