@@ -15,6 +15,7 @@ def download(url, output=None):
     logger.info('output path: %s', output)
 
     response = requests.get(url)
+    logger.debug('response status: %s', response.status_code)
     response.raise_for_status()
 
     html = download_resources(response.text, url, output)
