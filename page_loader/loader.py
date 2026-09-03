@@ -3,6 +3,7 @@ import os
 
 import requests
 
+from page_loader.resources import download_resources
 from page_loader.url_utils import build_file_name
 
 logger = logging.getLogger(__name__)
@@ -16,9 +17,11 @@ def download(url, output=None):
     response = requests.get(url)
     response.raise_for_status()
 
+    html = download_resources(response.text, url, output)
+
     file_path = os.path.join(output, build_file_name(url))
     logger.info('write html file: %s', file_path)
     with open(file_path, 'w', encoding='utf-8') as html_file:
-        html_file.write(response.text)
+        html_file.write(html)
 
     return file_path

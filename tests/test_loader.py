@@ -3,6 +3,7 @@ import os
 import pytest
 import requests
 import requests_mock
+from bs4 import BeautifulSoup
 
 from page_loader import download
 
@@ -17,7 +18,14 @@ def test_download_saves_file(tmp_path, page_content):
 
     expected_path = tmp_path / EXPECTED_FILE_NAME
     assert file_path == str(expected_path)
-    assert expected_path.read_text(encoding='utf-8') == page_content
+
+    # BeautifulSoup re-serializes the page (prettify()), so the saved file
+    # is compared by content, not byte-for-byte, per the project's own hint.
+    saved_html = expected_path.read_text(encoding='utf-8')
+    saved_soup = BeautifulSoup(saved_html, 'html.parser')
+    original_soup = BeautifulSoup(page_content, 'html.parser')
+    assert saved_soup.get_text().split() == original_soup.get_text().split()
+    assert saved_soup.title.string.strip() == original_soup.title.string.strip()
 
 
 def test_download_returns_absolute_path(tmp_path, page_content):
